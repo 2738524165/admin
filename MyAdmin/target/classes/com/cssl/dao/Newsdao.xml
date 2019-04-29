@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cssl.dao.Newsdao">
+
+    <insert id="insertnews" parameterType="com.cssl.pojo.News">
+       INSERT INTO `news` VALUES(0,#{n_title},#{n_time},#{n_content})
+    </insert>
+
+    <select id="shownews" resultType="com.cssl.pojo.News">
+            SELECT * FROM `news`   WHERE 1=1
+        <if test="name!= null and name!='' ">
+            AND  `n_title` LIKE #{name}
+        </if>
+        <if test="shijin!= null and shijin!=''">
+            AND `n_time` LIKE #{shijin}
+        </if>
+    </select>
+
+    <select id="newss" resultType="com.cssl.pojo.News">
+         SELECT * FROM `news` WHERE `n_id`=#{param1}
+    </select>
+
+
+    <update id="updatenews" parameterType="com.cssl.pojo.News">
+        UPDATE `news` SET `n_title`=#{n_title},`n_time`=#{n_time},`n_content`=#{n_content} WHERE  `n_id`=#{n_id}
+    </update>
+
+    <delete id="deletenews" parameterType="int">
+            DELETE FROM  `news`  WHERE `n_id`=#{param1}
+    </delete>
+
+</mapper>

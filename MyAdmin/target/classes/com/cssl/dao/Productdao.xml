@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cssl.dao.Productdao">
+
+    <insert id="tinajiaimg" parameterType="com.cssl.pojo.Product">
+        INSERT INTO `product` VALUES(0,#{cs_id},#{p_color},#{p_image})
+    </insert>
+
+
+
+    <delete id="deletetu" parameterType="int">
+        DELETE  FROM  product WHERE `cs_id` in
+        <foreach collection="list" item="id"
+                 open="(" close=")" index="index" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="XGTP" parameterType="com.cssl.pojo.Product">
+        UPDATE `product` SET `p_image`=#{p_image} WHERE `p_id`= #{p_id}
+    </update>
+
+
+
+
+    
+</mapper>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cssl.dao.Usersdao">
+
+    <select id="login" resultType="com.cssl.pojo.Users">
+      SELECT * FROM users WHERE u_name=#{u_name} and  u_pwd=#{u_pwd}
+    </select>
+
+    <select id="countyong" resultType="int">
+        SELECT COUNT(1) FROM users
+    </select>
+
+    <select id="countadmin" resultType="int">
+        SELECT COUNT(1) FROM users WHERE  `u_type` =2
+    </select>
+
+    <update id="updateadmin" parameterType="String">
+        UPDATE users SET u_pwd=#{param1}    WHERE u_pwd=#{param2} AND u_name=#{param3}
+    </update>
+
+    <select id="xinxi" resultType="com.cssl.pojo.Users">
+        SELECT * FROM users WHERE u_name=#{param1}
+    </select>
+
+
+    <select id="show" resultType="map">
+        SELECT * FROM users WHERE 1=1
+        <if test="name!= null and name!='' ">
+          AND  u_name LIKE #{name}
+        </if>
+        <if test="shijin!= null and shijin!=''">
+            AND  u_record_date LIKE #{shijin}
+        </if>
+    </select>
+
+    <insert id="tianjia" parameterType="com.cssl.pojo.Users">
+     INSERT INTO users VALUES (0, #{u_name},#{u_pwd},#{u_phone}, #{u_pay_pwd}, #{u_record_date}, #{u_type},#{u_sex},#{u_email},#{u_address},#{u_remark})
+    </insert>
+
+    <delete id="deleteyh" parameterType="int">
+        DELETE FROM users WHERE  u_id in
+
+        <foreach collection="list" item="id"
+                 open="(" close=")" index="index" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="BianJi" resultType="com.cssl.pojo.Users">
+       SELECT * FROM users WHERE u_id=#{param1}
+    </select>
+
+    <update id="updateyh" parameterType="com.cssl.pojo.Users">
+        update users set u_name=#{u_name} ,u_pwd=#{u_pwd},u_phone=#{u_phone},u_pay_pwd=#{u_pay_pwd},u_record_date=#{u_record_date},u_type=#{u_type},u_sex=#{u_sex},u_email=#{u_email},u_address=#{u_address},u_remark=#{u_remark}
+where u_id=#{u_id}
+    </update>
+
+    <update id="updateyhqx" parameterType="com.cssl.pojo.Users">
+        update users set u_name=#{u_name},u_type=#{u_type}
+        where u_id=#{u_id}
+    </update>
+
+    <update id="updateyhqx1" parameterType="com.cssl.pojo.Users">
+        update users set u_type=#{u_type}
+        where u_id=#{u_id}
+    </update>
+
+    <select id="qxcsshow" resultType="map">
+        SELECT * FROM users WHERE  `u_type`=0
+    </select>
+
+    <update id="updateyhtjqx" parameterType="com.cssl.pojo.Users">
+        update users set u_type=#{u_type}
+        where u_name=#{u_name}
+    </update>
+
+    <select id="yonghuyii" resultType="int" parameterType="String">
+       SELECT count(1) FROM users  where  u_name=#{param1}
+    </select>
+    
+    
+</mapper>

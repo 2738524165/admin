@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cssl.dao.Ordersdao">
+    <resultMap id="maps" type="Orders">
+        <id column="o_number" property="o_number"></id>
+        <collection property="maps" ofType="map"></collection>
+    </resultMap>
+
+
+    <select id="countOrders" resultType="int">
+       SELECT COUNT(1) FROM orders
+    </select>
+
+    <select id="countjine" resultType="String">
+      SELECT SUM(od_pirce*od_quantity) FROM orders_details
+    </select>
+
+    <select id="showorders" resultMap="maps">
+      SELECT O.O_NUMBER,O.O_TIME,O.O_TYPE,O.O_PAYMENT,U.`u_name`,
+                            OD.OD_PIRCE,OD.OD_QUANTITY,C.CY_ID,C.CY_NAME,O.O_TOTALPRICE,
+                            P.P_COLOR,P.P_IMAGE FROM orders O
+                            INNER JOIN users U ON(O.U_ID=U.U_ID)
+                            INNER JOIN orders_details OD ON(O.O_NUMBER=OD.O_NUMBER)
+                            INNER JOIN commodity C ON(OD.CY_ID=C.CY_ID)
+                            INNER JOIN cdetails CD ON(C.CY_ID=CD.CY_ID)
+                            INNER JOIN product P ON(CD.CS_ID=P.CS_ID)
+        <if test="name!= null and name!='' ">
+            AND  U.`u_name` LIKE #{name}
+        </if>
+        <if test="shijin!= null and shijin!=''">
+            AND  O.`o_time` LIKE  #{shijin}
+        </if>
+    </select>
+
+    <select id="ddxgcs" resultType="com.cssl.pojo.Orders">
+        SELECT * FROM `orders` WHERE `o_number`=#{param1}
+    </select>
+    
+    <update id="ddupdate" parameterType="com.cssl.pojo.Orders">
+         UPDATE  `orders` SET   `o_type`=#{o_type} WHERE `o_number`=#{o_number}
+    </update>
+
+    <select id="countorders_details" resultType="int">
+        SELECT COUNT(*) FROM `orders_details` WHERE `cy_id`=#{param1}
+    </select>
+
+
+</mapper>

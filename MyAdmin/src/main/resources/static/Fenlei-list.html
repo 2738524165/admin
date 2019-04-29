@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <title>Title</title>
+    <script type="application/javascript" src="js/jquery-1.8.3.js"></script>
+    <script type="application/javascript">
+    </script>
+</head>
+<link type="text/css" rel="stylesheet" href="css/style.css" />
+
+</head>
+<body>
+
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商品信息 <span class="c-gray en">&gt;</span> 分类管理  </nav>
+<div class="cl pd-5 bg-1 bk-gray mt-20">   <a class="btn btn-primary radius"   onclick="member_add('添加分类','Fenlei-add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加分类</a></span> </div>
+<div class="main">
+    <div class="manage">
+        <table class="list" >
+            <tr>
+                <th>顺序</th>
+                <th>分类名称</th>
+                <th>操作</th>
+            </tr>
+    <div th:each="ms ,ststu:${session.Fenone}">
+        <tr>
+           <td class="first w4 c"> <span th:text="${ststu.index}"></span></td>
+         <td><span  th:text="${ms.getOc_name()}"></span></td>
+         <td class="td-manage"></td>
+       </tr>
+    </tr>
+        <div th:each="ms2 :${ms.getList()}">
+            <tr>
+                <td class="first w4 c"><span th:text="${ststu.index}"></span></td>
+                <td class="childClass"  > <span   th:text="${ms2.getOc_name()}"></span> </td>
+                <td class="td-manage">   </td>
+            </tr>
+             <tr  th:each="ms3 :${ms2.getList2()}">
+                 <td class="first w4 c"><span th:text="${ststu.index}"></span></td>
+                <td class="child2Class"><span th:text="${ms3.getTc_content()}"></span></td>
+                 <td class="td-manage"><a title="编辑" href="javascript:" onclick="member_edit('编辑','ShowFenLeicg?id='+this.type) " th:type="${ms3.getTc_id()}" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;"   th:onclick= "'javascript:member_del3('+${ms3.getTc_id()}+')'"     class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+            </div>
+    </div>
+        </table>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+    });
+    /*用户-添加*/
+    function member_add(title,url,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*用户-添加*/
+    function member_edit(title,url,w,h){
+        layer_show(title,url,w,h);
+    }
+
+    function member_del3(p) {
+        layer.confirm('确认要删除吗？',function(index){
+            $.post("deleteTows",{id:p},function (j) {
+                if(j=="1"){
+                    layer.msg('已删除',{icon:6,time:1000});
+                    $(obj).parents("tr").remove();
+                    var index = parent.layer.getFrameIndex(window.name);
+                    index.location.reload() //刷新父级页面
+                } else {
+                    layer.msg('该分类有商品不能删除!',{icon:5,time:1000});
+                }
+            })
+        });
+    }
+</script>
+</html>

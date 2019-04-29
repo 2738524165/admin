@@ -1,0 +1,36 @@
+
+mybatis:
+  type-aliases-package: com.cssl.pojo
+  configuration:
+    auto-mapping-behavior: full
+    use-generated-keys: true
+spring:
+  mvc:
+    static-path-pattern: /**
+
+  datasource:
+     driver-class-name: com.mysql.cj.jdbc.Driver
+     url: jdbc:mysql:///ctswshopping?serverTimezone=UTC
+     username: root
+     password: root
+
+  thymeleaf:
+    cache: false
+    encoding: utf-8
+    prefix: classpath:/static/
+    suffix: .html
+  resources:
+    static-locations: classpath:/templates/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:static/,file:static/
+
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+
+
+pagehelper:
+  helperDialect: oracle
+  reasonable: true
+  page-size-zero: true
+server:
+  port: 8088

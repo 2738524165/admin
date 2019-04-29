@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.cssl.dao.Fclass">
+
+
+    <resultMap type="One_class" id="maps">
+        <id column="one_id" property="oc_id"/>
+        <result column="one_name" property="oc_name"></result>
+        <collection property="list" ofType="One_class">
+            <id column="two_id" property="oc_id"/>
+            <result column="two_name" property="oc_name"></result>
+            <collection property="list2" ofType="Tow_class">
+                <id column="three_id" property="tc_id"/>
+                <result column="three_name" property="tc_content"></result>
+            </collection>
+        </collection>
+    </resultMap>
+
+
+        <select id="showOne_class" resultType="com.cssl.pojo.One_class" >
+          SELECT * FROM one_class WHERE oc_fid  IS NULL
+        </select>
+    <select id="showerji_class" resultType="com.cssl.pojo.One_class" >
+       SELECT * FROM one_class  WHERE oc_fid= #{param1}
+    </select>
+
+    <select id="ShowXGXianShi" resultType="com.cssl.pojo.One_class">
+        SELECT * FROM `one_class` WHERE `oc_id`= #{param1}
+    </select>
+
+
+    <select id="showtow_class"   resultType="com.cssl.pojo.Tow_class">
+          SELECT *FROM  tow_class WHERE `oc_id`=#{param1}
+    </select>
+
+
+
+    <select id="XainhsiFenleitow" resultType="com.cssl.pojo.Tow_class">
+   SELECT * FROM  `tow_class` WHERE `tc_id`=#{param1}
+    </select>
+
+
+    <select id="showOne_class2" resultType="com.cssl.pojo.One_class" >
+              SELECT * FROM one_class WHERE oc_fid   IS NOT NULL
+    </select>
+
+
+    <insert id="yijifl" parameterType="com.cssl.pojo.One_class">
+            INSERT INTO `one_class` VALUES(0,#{oc_name}, NULL )
+    </insert>
+
+    <insert id="yijifl2" parameterType="com.cssl.pojo.One_class"   >
+        INSERT INTO `one_class` VALUES(0,#{oc_name},#{oc_fid})
+    </insert>
+
+
+    <insert id="sjfl" parameterType="com.cssl.pojo.One_class" >
+      INSERT INTO `tow_class` VALUES(0,#{tc_content},#{oc_id})
+    </insert>
+
+
+    <select id="ShowFen" resultMap="maps">
+    SELECT a.`oc_id` one_id ,a.`oc_name` one_name,c.oc_id two_id,c.oc_name two_name ,b.`tc_content` three_name ,b.`tc_id` three_id   FROM `one_class` a,`tow_class`  b,`one_class` c
+    WHERE a.`oc_id`=c.oc_fid AND b.`oc_id`=c.oc_id
+    </select>
+
+    <delete id="deleteTow" parameterType="int">
+            DELETE FROM `tow_class` WHERE `tc_id`=#{param1}
+    </delete>
+
+
+
+    <update id="updateyiji" parameterType="com.cssl.pojo.One_class">
+        UPDATE `one_class` SET `oc_name`=#{oc_name} WHERE `oc_id`=#{oc_id}
+    </update>
+
+    <update id="updateTowsanji" parameterType="com.cssl.pojo.Tow_class">
+      UPDATE `tow_class` SET `tc_content` =#{tc_content}
+      <if test="oc_id!=0">
+         , `oc_id`=#{oc_id}
+      </if>
+         WHERE `tc_id`=#{tc_id}
+    </update>
+
+    <select id="Fenleidelete" resultType="int">
+        SELECT COUNT(*) FROM   `commodity`  WHERE  `tc_id`=#{param1}
+    </select>
+
+</mapper>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cssl.dao.Commoditydao">
+
+    <select id="show" resultType="map">
+        SELECT a.`cy_id` , a.cy_sales,t.`tc_content`,c.`cs_id`,c.`p_image`,a.`cy_name`,a.`cy_price`,a.`cy_inventory`,
+        a.`cy_shelftime`,a.`cy_introduction`,a.`cy_placeoforigin`
+        FROM `commodity` a,`cdetails` b,`product` c,`tow_class` t WHERE a.`tc_id` =t.`tc_id`  AND c.`cs_id`=b.`cs_id` AND  b.`cy_id`=a.`cy_id`
+        <if test="name!= null and name!='' ">
+            AND  a.`cy_name` LIKE #{name}
+        </if>
+        <if test="shijin!= null and shijin!=''">
+            AND a.cy_shelftime LIKE  #{shijin}
+        </if>
+    </select>
+
+    <insert id="TJSP" parameterType="com.cssl.pojo.Commodity"  useGeneratedKeys="true" keyProperty="cy_id">
+        INSERT INTO `commodity` VALUES (0,#{cy_name},#{cy_introduction},#{cy_price},#{cy_sales},#{cy_inventory},#{cy_discount},#{cy_shelftime},#{cy_placeoforigin},#{tc_id},#{um_id})
+    </insert>
+
+    <insert id="TJSPXQ" parameterType="com.cssl.pojo.Cdetails"  useGeneratedKeys="true" keyProperty="cs_id" >
+       INSERT INTO `cdetails` VALUES(0,#{cs_version},#{cs_frontcamera},#{cs_rearcamera},#{cs_resolution},#{cs_size},#{cs_system},#{cy_id},#{cy_weight})
+    </insert>
+
+
+    <delete id="deletesp" parameterType="int">
+        DELETE  FROM  commodity  WHERE  cy_id  in
+        <foreach collection="list" item="cid"
+                 open="(" close=")" index="index" separator=",">
+            #{cid}
+        </foreach>
+    </delete>
+
+    <delete id="deletexq" parameterType="int">
+        DELETE  FROM  `cdetails` WHERE  `cs_id` in
+        <foreach collection="list" item="id"
+                 open="(" close=")" index="index" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+
+    <select id="spxgcx" resultType="map" >
+	SELECT a.`cy_id` , a.cy_sales, t.`tc_content`,t.`tc_id`,c.`cs_id`,c.p_id,c.`p_image`,a.`cy_name`,a.`cy_price`,a.`cy_inventory`,
+        a.`cy_shelftime`,a.`cy_introduction`,a.`cy_placeoforigin`,d.`oc_id`,d.`oc_name`
+        FROM `commodity` a,`cdetails` b,`product` c,`tow_class` t,`one_class` d WHERE a.`tc_id` =t.`tc_id`  AND c.`cs_id`=b.`cs_id` AND  b.`cy_id`=a.`cy_id`
+        AND t.`oc_id`=d.`oc_id`
+        AND a.`cy_id`= #{param1}
+    </select>
+
+    <update id="SPXG" parameterType="com.cssl.pojo.Commodity" >
+        UPDATE `commodity`  SET `cy_name`=#{cy_name},tc_id=#{tc_id},`cy_price`=#{cy_price},`cy_inventory`=#{cy_inventory},`cy_placeoforigin`=#{cy_placeoforigin},`cy_introduction`=#{cy_introduction} WHERE `cy_id`=#{cy_id}
+    </update>
+
+
+    <select id="SPCXXS" resultType="com.cssl.pojo.Commodity"> SELECT * FROM `commodity` WHERE cy_inventory =0 </select>
+
+    <select id="SPSLCS" resultType="com.cssl.pojo.Commodity" >
+        SELECT * FROM `commodity` WHERE  `cy_id`=#{param1}
+    </select>
+
+    <update id="SPKCXG" parameterType="com.cssl.pojo.Commodity">
+          UPDATE `commodity` set  cy_inventory= #{cy_sales} WHERE  `cy_id`=#{cy_id}
+    </update>
+
+    <update id="Deletespkc" parameterType="int">
+        UPDATE  `commodity` SET cy_inventory=0  WHERE  `cy_id`=#{param1}
+    </update>
+
+
+</mapper>

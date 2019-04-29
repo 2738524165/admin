@@ -1,0 +1,311 @@
+﻿<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="Bookmark" href="/favicon.ico" >
+<link rel="Shortcut Icon" href="/favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+
+<title>基本设置</title>
+</head>
+<body>
+</div>
+		<div id="tab-system" class="HuiTab">
+			<div class="tabBar cl">
+				<span>修改一级分类</span>
+				<span id="b">修改二级分类</span>
+				<span id="c">修改三级分类</span>
+			</div>
+			<form class="form form-horizontal" id="form-article-add">
+			<div class="tabCon">
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">
+						<span class="c-red">*</span>
+						选择一级分类：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<select name="yiji" id="yiji" class="select"  >
+
+						</select>
+					</div>
+				</div>
+
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">
+						<span class="c-red">*</span>
+						修改根目录：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<input type="text" name="Fenleiname" id="Fenleiname" placeholder="" value="" class="input-text radius" style="width:90%"/>
+					</div>
+				</div>
+				<div class="row cl">
+					<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+						<button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 修改</button>
+					</div>
+				</div>
+
+			</div>
+			</form>
+
+			<form class="form form-horizontal" id="form-article-add2">
+			<div class="tabCon">
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">
+						<span class="c-red">*</span>
+						选择二级分类：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<select name="erji" id="erji" class="select"  >
+
+						</select>
+					</div>
+				</div>
+
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">
+						<span class="c-red">*</span>
+						修改二级分类：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<input type="text" name="Fenleiname2" id="Fenleiname2" placeholder="" value="" class="input-text radius" style="width:90%"/>
+					</div>
+				</div>
+				<div class="row cl">
+					<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+						<button onClick="article_save_submit2();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 修改</button>
+					</div>
+				</div>
+			</div>
+			</form>
+
+			<form class="form form-horizontal" id="form-article-add3">
+			<div class="tabCon">
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">
+						<span class="c-red">*</span>
+						修改三级分类：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<input type="text" name="Fenleiname3" id="Fenleiname3" placeholder="" th:value="${session.sanjisjow.getTc_content()}" class="input-text radius" style="width:90%"/>
+						<input  type="text"  name="Fenleiname3" id="oid"   th:value="${session.sanjisjow.getTc_id()}" class="input-text radius" style="display: none"/>
+					</div>
+				</div>
+
+
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">
+						<span class="c-red">*</span>
+						移动到：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<select name="yidong" id="yidong" class="select">
+
+						</select>
+					</div>
+				</div>
+
+
+				<div class="row cl">
+					<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+						<button onClick="article_save_submit3();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 修改</button>
+					</div>
+				</div>
+			</div>
+			</form>
+
+			<div class="tabCon">
+			</div>
+		</div>
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
+
+    $("#tab-system").Huitab({
+		index:0
+    });
+
+    $.ajax({
+        url: "FenLeiss2?id="+0,
+        data: {
+            "type": "ajax"
+        },
+        datatype: "json",
+        type: "get",
+        success: function (data) {/*
+            $("#yiji").empty();*/
+            $.each(data, function(index, item) {
+                $("select [name='yiji']").empty();
+                $("#yiji").append($("<option value='" + item.oc_id + "'>" + item.oc_name + "</option>"));
+            });
+        }
+    });
+
+
+
+
+    $("#b").click(function () {
+                $.ajax({
+                    url: "FenLeiss2",
+                    data: {
+                        "type": "ajax"
+                    },
+                    datatype: "json",
+                    type: "get",
+                    success: function (data) {
+                        $("#erji").empty();
+                        $.each(data, function(index, item) {
+                            $("select [name='erji']").empty();
+                            $("#erji").append($("<option value='" + item.oc_id + "'>" + item.oc_name + "</option>"));
+                        });
+
+                    }
+                });
+    });
+
+
+
+    $("#c").click(function () {
+        $.ajax({
+            url: "FenLeiss2",
+            data: {
+                "type": "ajax"
+            },
+            datatype: "json",
+            type: "get",
+            success: function (data) {
+                $("#yidong").empty();
+                $("#yidong").append($("<option value='" + "0" + "'>" + "请选择" + "</option>"));
+                $.each(data, function(index, item) {
+                    $("select [name='yidong']").empty();
+                    $("#yidong").append($("<option value='" + item.oc_id + "'>" + item.oc_name + "</option>"));
+                });
+            }
+        });
+    });
+
+
+
+    $("#form-article-add").validate({
+        rules:{
+
+        },
+        onkeyup:false,
+        focusCleanup:true,
+        success:"valid",
+        submitHandler:function(form) {
+            var yiji = $("#yiji").val();//根目录
+            var Fenleiname = $("#Fenleiname").val(); //添加一级分类
+            if ( Fenleiname=="") {
+                layer.msg('请输入完整信息', {icon:5, time: 1000});
+            } else   {
+                $.post("FenleiXg", {id:yiji,name:Fenleiname}, function (a) {
+                    if (a == "1") {
+                        //添加成功
+                        layer.msg('添加成功!', {icon: 6, time: 1000});
+                    } else {
+                        layer.msg('添加失败，请联系管理员!', {icon: 5, time: 1000});
+                    }
+                });
+            }
+        }
+    });
+
+
+
+    $("#form-article-add2").validate({
+        rules:{
+
+        },
+        onkeyup:false,
+        focusCleanup:true,
+        success:"valid",
+        submitHandler:function(form) {
+            var yiji = $("#erji").val();//一级分类id
+            var Fenleiname = $("#Fenleiname2").val(); //添加二级分类
+            if ( Fenleiname=="") {
+                layer.msg('请输入完整信息', {icon:5, time: 1000});
+            } else   {
+                $.post("FenleiXg", {id2:yiji,name2:Fenleiname}, function (a) {
+                    if (a == "1") {
+                        //添加成功
+                        layer.msg('添加成功!', {icon: 6, time: 1000});
+                    } else {
+                        layer.msg('添加失败，请联系管理员!', {icon: 5, time: 1000});
+                    }
+                });
+            }
+        }
+    });
+
+
+
+
+    $("#form-article-add3").validate({
+        rules:{
+
+        },
+        onkeyup:false,
+        focusCleanup:true,
+        success:"valid",
+        submitHandler:function(form) {
+            var yiji = $("#oid").val();//一级分类id
+            var Fenleiname = $("#Fenleiname3").val(); //添加二级分类
+            var oid = $("#yidong").val(); //添加二级分类
+            if ( Fenleiname=="") {
+                layer.msg('请输入完整信息', {icon:5, time: 1000});
+            } else   {
+                $.post("FenleiXg", {id3:yiji,name3:Fenleiname,oid:oid}, function (a) {
+                    if (a == "1") {
+                        //添加成功
+                        layer.msg('添加成功!', {icon: 6, time: 1000});
+                        var int = self.setInterval(function () {  // 这个方法是说在延迟两秒后执行大括号里的方法
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.$('.btn-refresh').click();
+                            parent.location.reload(); //刷新父级页面
+                            parent.layer.close(index); //关闭面板
+                        }, 1000) //这里1000代表1秒
+                    } else {
+                        layer.msg('添加失败，请联系管理员!', {icon: 5, time: 1000});
+                    }
+                });
+            }
+        }
+    });
+});
+
+
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

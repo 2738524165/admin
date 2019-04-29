@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>  
+ 
+	<link rel="stylesheet" href="assets/materialize/css/materialize.min.css" media="screen,projection" />
+    <!-- Bootstrap Styles-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FontAwesome Styles-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <!-- Morris Chart Styles--> 
+    <!-- Custom Styles-->
+    <link href="assets/css/custom-styles.css" rel="stylesheet" />
+    <script type="text/javascript" src="lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
+    <!-- Google Fonts-->
+	<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+          	$.post("/getcount",function (a) {
+                $("#count").text(a);
+            })
+        })
+	</script>
+</head>
+
+<body> 
+<div style="margin: 60px  50px">
+	<h3><span style="color: red" th:text="${session.u.getU_name()}"></span> 欢迎使用 歪秀后台管理</h3>
+	<br/>
+			<h4 > 上次登录时间：<span th:text="${session.shijin}" > </span> </h4>
+	<br/>
+                <div class="row"  >
+                    <div class="col-xs-12 col-sm-6 col-md-3" style="width: 280px">
+						<div class="card horizontal cardIcon waves-effect waves-dark">
+						<div class="card-image red">
+						<i class="fa fa-eye fa-5x"></i>
+						</div>
+						<div class="card-stacked">
+						<div class="card-content">
+							<h3><span id="count"></span></h3>
+						</div>
+						<div class="card-action">
+							<strong> 访问次数 </strong>
+						</div>
+						</div>
+						</div>
+                    </div>
+					<a href="/YongHuGuanLi">
+					<div class="col-xs-12 col-sm-6 col-md-3">
+						<div class="card horizontal cardIcon waves-effect waves-dark" style="width: 280px">
+							<div class="card-image">
+								<i class="fa fa-users fa-5x"></i>
+							</div>
+							<div class="card-stacked">
+								<div class="card-content">
+									<h3><span th:text="${session.countyonghu}">0</span></h3>
+								</div>
+								<div class="card-action">
+									<strong>用户数量</strong>
+								</div>
+							</div>
+						</div>
+					</div>
+					</a>
+
+					<a href="/showOrders">
+					<div class="col-xs-12 col-sm-6 col-md-3">
+						<div class="card horizontal cardIcon waves-effect waves-dark" style="width: 280px">
+							<div class="card-image orange">
+								<i class="fa fa-shopping-cart fa-5x"></i>
+							</div>
+							<div class="card-stacked">
+								<div class="card-content">
+									<h3><span th:text="${session.countOrders}">0</span></h3>
+								</div>
+								<div class="card-action">
+									<strong> 订单数量</strong>
+								</div>
+							</div>
+						</div>
+					</div>
+					</a>
+
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+					 <div class="card horizontal cardIcon waves-effect waves-dark" style="width: 280px">
+						<div class="card-image blue">
+						<i class="fa fa-comments fa-5x"></i>
+						</div>
+						<div class="card-stacked">
+						<div class="card-content">
+						<h3><span th:text="${session.countjine}">0</span></h3>
+						</div>
+						<div class="card-action">
+						<strong> 总金额</strong>
+						</div>
+						</div>
+						</div>
+                    </div>
+                </div>
+                		 
+</div>
+</body>
+</html>
